@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PACHU PEÑA</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/black.css" />
+    <link rel="stylesheet" href="plugin/highlight/monokai.css" />
+
+    <style>
+      img.logo {
+        width: 180px;
+        margin-top: 20px;
+      }
+      .section-title {
+        color: #ffc107;
+        text-shadow: 1px 1px 2px black;
+      }
+      ul li {
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-background-color="#1a1a1a">
+        <h1 class="section-title">📌 Presentación General</h1>
+        <p style="color: white; font-size: 1.2em;">En esta presentación abordaremos dos problemas de optimización resueltos con programación lineal utilizando Python.</p>
+        <ul style="color: #ffc107; margin-top: 30px; font-size: 1.1em;">
+          <li class="fragment fade-up">📚 Problema 1: Edición de Revistas</li>
+          <li class="fragment fade-up">🏠 Problema 2: Construcción de Casas</li>
+
+        </ul>
+      </section>
+	  		  <section>
+          <li class="fragment fade-up">💻 Código Python con <code>scipy.optimize.linprog</code></li>
+          <li class="fragment fade-up">📈 Resultados y análisis</li>
+		  </section>
+      <section data-background-color="black" data-auto-animate>
+        <h1 class="section-title">Optimización de Recursos</h1>
+        <h3 style="color: white">Programación Lineal con Python</h3>
+        <p style="color: gray">Franco Vivas, Matías San Román</p>
+        <p style="color: gray">Grupo: PACHU PEÑA</p>
+        <img class="logo" src="PACHU1.png" data-preview-image="PACHU2.png">
+      </section>
+        <section>
+          <section data-background-color="rgb(25, 25, 112)" data-auto-animate>
+            <h2 class="section-title">📚 Problema 1: Edición de Revistas</h2>
+            <p style="color:white;">Maximizar ingresos con recursos limitados</p>
+          </section>
+
+          <section data-auto-animate>
+            <h3>🔧 Planteo</h3>
+            <ul>
+              <li class="fragment fade-up">Revista Deportiva: 2 negros, 1 color, €3</li>
+              <li class="fragment fade-up">Revista Cultural: 2 negros, 2 color, €5</li>
+              <li class="fragment fade-up">Cartuchos disponibles: 500 negros y 500 color</li>
+            </ul>
+          </section>
+
+          <section data-auto-animate>
+            <h3>📏 Modelo Matemático</h3>
+            <ul>
+              <li class="fragment fade-up">Variables: x = deportivas, y = culturales</li>
+              <li class="fragment fade-up">Función Objetivo: Max 3x + 5y</li>
+              <li class="fragment fade-up">Restricciones:</li>
+              <ul>
+                <li class="fragment fade-up">x + y ≤ 250</li>
+                <li class="fragment fade-up">x + 2y ≤ 500</li>
+                <li class="fragment fade-up">x, y ≥ 0</li>
+              </ul>
+            </ul>
+          </section>
+
+          <section data-background-color="rgb(0, 60, 100)" data-auto-animate>
+            <h3 style="color:white;">📊 Resultado</h3>
+            <ul style="color:white;">
+              <li class="fragment fade-up">✅ 0 deportivas</li>
+              <li class="fragment fade-up">✅ 250 culturales</li>
+              <li class="fragment fade-up">💸 Ingreso máximo: €1.250</li>
+            </ul>
+          </section>
+
+          <section data-auto-animate>
+            <h3>🧪 Código Python</h3>
+            <pre><code data-trim data-noescape>
+<span class="fragment fade-up">from scipy.optimize import linprog</span>
+
+<span class="fragment fade-up">c = [-3, -5]</span>
+<span class="fragment fade-up">A = [[1, 1], [1, 2]]</span>
+<span class="fragment fade-up">b = [250, 500]</span>
+<span class="fragment fade-up">x_bounds = (0, None)</span>
+<span class="fragment fade-up">y_bounds = (0, None)</span>
+
+<span class="fragment fade-up">res = linprog(c, A_ub=A, b_ub=b, bounds=[x_bounds, y_bounds], method="highs")</span>
+
+<span class="fragment fade-up">if res.success:</span>
+<span class="fragment fade-up">    print("=== RESULTADO ÓPTIMO ===")</span>
+<span class="fragment fade-up">    print(f"Deportivas: {res.x[0]:.2f}")</span>
+<span class="fragment fade-up">    print(f"Culturales: {res.x[1]:.2f}")</span>
+<span class="fragment fade-up">    print(f"Ingreso: €{-res.fun:.2f}")</span>
+            </code></pre>
+          </section>
+        </section>
+        <section>
+          <section data-background-color="rgb(55, 0, 70)" data-auto-animate>
+            <h2 class="section-title">🏠 Problema 2: Construcción de Casas</h2>
+            <p style="color:white;">Maximizar beneficios respetando el presupuesto</p>
+          </section>
+
+          <section data-auto-animate>
+            <h3>🔧 Datos</h3>
+            <ul>
+              <li class="fragment fade-up">Tipo A: €300.000, beneficio €40.000</li>
+              <li class="fragment fade-up">Tipo B: €200.000, beneficio €30.000</li>
+              <li class="fragment fade-up">Presupuesto: €18.000.000</li>
+              <li class="fragment fade-up">Máx. casas: 80</li>
+            </ul>
+          </section>
+
+          <section data-auto-animate>
+            <h3>📏 Modelo Matemático</h3>
+            <ul>
+              <li class="fragment fade-up">Variables: x = casas A, y = casas B</li>
+              <li class="fragment fade-up">Función Objetivo: Max 40.000x + 30.000y</li>
+              <li class="fragment fade-up">Restricciones:</li>
+              <ul>
+                <li class="fragment fade-up">3x + 2y ≤ 180</li>
+                <li class="fragment fade-up">x + y ≤ 80</li>
+                <li class="fragment fade-up">x, y ≥ 0</li>
+              </ul>
+            </ul>
+          </section>
+
+          <section data-background-color="rgb(20, 60, 30)" data-auto-animate>
+            <h3 style="color:white;">📊 Resultado</h3>
+            <ul style="color:white;">
+              <li class="fragment fade-up">✅ 20 casas A</li>
+              <li class="fragment fade-up">✅ 60 casas B</li>
+              <li class="fragment fade-up">💰 Beneficio: €2.600.000</li>
+            </ul>
+          </section>
+
+          <section data-auto-animate>
+            <h3>🏗️ Código Python</h3>
+            <pre><code data-trim data-noescape>
+<span class="fragment fade-up">from scipy.optimize import linprog</span>
+
+<span class="fragment fade-up">c = [-40000, -30000]</span>
+<span class="fragment fade-up">A = [[3, 2], [1, 1]]</span>
+<span class="fragment fade-up">b = [180, 80]</span>
+<span class="fragment fade-up">x_bounds = (0, None)</span>
+<span class="fragment fade-up">y_bounds = (0, None)</span>
+
+<span class="fragment fade-up">res = linprog(c, A_ub=A, b_ub=b, bounds=[x_bounds, y_bounds], method="highs")</span>
+
+<span class="fragment fade-up">if res.success:</span>
+<span class="fragment fade-up">    print("=== RESULTADO ÓPTIMO ===")</span>
+<span class="fragment fade-up">    print(f"Tipo A: {res.x[0]:.2f}")</span>
+<span class="fragment fade-up">    print(f"Tipo B: {res.x[1]:.2f}")</span>
+<span class="fragment fade-up">    print(f"Beneficio: €{-res.fun:.2f}")</span>
+            </code></pre>
+          </section>
+        </section>
+        <section data-auto-animate data-background-color="black">
+          <h2 class="section-title">🎯 Conclusión Final</h2>
+          <p style="color:white;">La programación lineal mejora decisiones estratégicas</p>
+          <p style="color:gray;">Python + linprog = eficiencia en empresas</p>
+        </section>
+        <section>
+          <h3 class="section-title">👥 Integrantes</h3>
+          <ul>
+            <li>Franco Vivas</li>
+            <li>Matías San Román</li>
+            <li>Grupo: <strong>PACHU PEÑA</strong></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        hash: true,
+        plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ],
+        slideNumber: true,
+        transition: 'fade',
+        transitionSpeed: 'fast',
+        autoAnimate: true
+      });
+    </script>
+  </body>
+</html>
