@@ -99,6 +99,12 @@ res = linprog(c, A_ub=A, b_ub=b, bounds=[(0,None),(0,None)], method='highs')
 print(res)
             </code></pre>
           </section>
+                    </section>
+                  <section data-auto-animate>
+          <h3 class="section-title">📈 Gráfico - Beneficio por tipo de casa</h3>
+          <img data-src="graficoCasas.png">
+          <canvas id="casasChart" width="600" height="400"></canvas>
+        </section>
         </section>
 
         <section>
@@ -140,9 +146,14 @@ b = [250, 500]
 res = linprog(c, A_ub=A, b_ub=b, bounds=[(0,None),(0,None)], method='highs')
 print(res)
             </code></pre>
-          </section>
+
+
         </section>
 
+        <section data-auto-animate>
+          <h3 class="section-title">📈 Gráfico - Ingreso por revista</h3>
+          <img data-src="graficoRevistas.png">
+        </section>
         <section data-background="#000000" data-auto-animate>
           <h2 class="section-title">🎯 Conclusión</h2>
           <p class="fragment fade-in">La programación lineal maximiza beneficios con lógica</p>
