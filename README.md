@@ -5,7 +5,7 @@ Grupo 5 - Problemas 3 y 1 - Presentacion en Reveal.js subida
 
 Esta presentación está desarrollada con [Reveal.js](https://revealjs.com/) y aborda **dos casos prácticos de optimización lineal**, utilizando Python y la librería **PuLP**.
 
-🧠 Casos incluidos
+# 🧠 Casos incluidos
 🏗️ Maximización del beneficio en construcción de casas
 Una constructora busca determinar cuántas casas de tipo A y tipo B construir para maximizar el beneficio total, considerando:
 
