@@ -97,16 +97,43 @@
             <h3 class="section-title">💻 Código Python</h3>
             <pre><code data-trim data-noescape class="fragment fade-in">
 from scipy.optimize import linprog
+
+# Coeficientes de la función objetivo (negativos porque linprog minimiza)
+# 40,000 por casa A y 30,000 por casa B
 c = [-40000, -30000]
-A = [[3, 2], [1, 1]]
+
+# Restricciones
+# Cada fila representa una restricción: [coeficiente de A, coeficiente de B]
+A = [
+    [3, 2],  # 3x + 2y <= 180  (Presupuesto máximo)
+    [1, 1]   # x + y <= 80     (Máximo total de casas)
+]
+
+# Lado derecho de las restricciones
 b = [180, 80]
-res = linprog(c, A_ub=A, b_ub=b, bounds=[(0,None),(0,None)], method='highs')
-print(res)
+
+# Límites para las variables: no pueden ser negativas
+x_bounds = (0, None)
+y_bounds = (0, None)
+
+# Resolver el problema usando linprog
+res = linprog(c, A_ub=A, b_ub=b, bounds=[x_bounds, y_bounds], method="highs")
+
+# Mostrar resultados
+if res.success:
+    print("=== RESULTADO ÓPTIMO ===")
+    print(f"Cantidad óptima de casas tipo A: {res.x[0]:.2f}")
+    print(f"Cantidad óptima de casas tipo B: {res.x[1]:.2f}")
+    beneficio_total = -res.fun
+    print(f"Beneficio máximo: €{beneficio_total:.2f}")
+else:
+    print("No se pudo encontrar una solución óptima.")
+
             </code></pre>
           </section>
                     </section>
                   <section data-auto-animate>
-          <h3 class="section-title">📈 Gráfico - Beneficio por tipo de casa</h3>
+          <h3 class="section-title">📈 Gráfico De restricciones y area factible</h3>
           <img data-src="graficoCasas.png">
           <canvas id="casasChart" width="600" height="400"></canvas>
         </section>
@@ -144,19 +171,45 @@ print(res)
           <section data-auto-animate>
             <h3 class="section-title">💻 Código Python</h3>
             <pre><code data-trim data-noescape class="fragment fade-in">
+# Programa para maximizar los ingresos de las revistas
+
 from scipy.optimize import linprog
+
+# Coeficientes de la función objetivo (negativos porque linprog minimiza)
 c = [-3, -5]
-A = [[1, 1], [1, 2]]
+
+# Restricciones
+A = [
+    [1, 1],   # x + y <= 250 (cartuchos negros)
+    [1, 2]    # x + 2y <= 500 (cartuchos color)
+]
+
 b = [250, 500]
-res = linprog(c, A_ub=A, b_ub=b, bounds=[(0,None),(0,None)], method='highs')
-print(res)
+
+# Límites de las variables
+x_bounds = (0, None)
+y_bounds = (0, None)
+
+# Resolver el problema
+res = linprog(c, A_ub=A, b_ub=b, bounds=[x_bounds, y_bounds], method="highs")
+
+# Mostrar resultados
+if res.success:
+    print("=== RESULTADO ÓPTIMO ===")
+    print(f"Cantidad de revistas deportivas: {res.x[0]:.2f}")
+    print(f"Cantidad de revistas culturales: {res.x[1]:.2f}")
+    ingreso_total = -res.fun
+    print(f"Ingreso máximo: €{ingreso_total:.2f}")
+else:
+    print("No se pudo encontrar una solución óptima.")
+
             </code></pre>
 
 
         </section>
 
         <section data-auto-animate>
-          <h3 class="section-title">📈 Gráfico - Ingreso por revista</h3>
+          <h3 class="section-title">📈 Gráfico De restricciones y area factible</h3>
           <img data-src="graficoRevistas.png">
         </section>
         <section data-background="#000000" data-auto-animate>
